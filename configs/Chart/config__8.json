@@ -1,0 +1,163 @@
+{
+  "charts": [
+    {
+      "url": "https://localhost:6443/arcgis/rest/services/Proyecto/ServicioCableado/MapServer/4",
+      "filter": {
+        "logicalOperator": "AND",
+        "parts": [],
+        "expr": "1=1"
+      },
+      "description": "",
+      "symbol": {
+        "color": [
+          247,
+          150,
+          70,
+          255
+        ],
+        "width": 0.75,
+        "type": "esriSLS",
+        "style": "esriSLSSolid"
+      },
+      "webMapLayerId": null,
+      "mode": "category",
+      "name": "Longitud de cableado según el tipo de cable.",
+      "highLightColor": "#ff0000",
+      "types": [
+        {
+          "type": "pie",
+          "display": {
+            "colors": [
+              "#5d9cd3",
+              "#eb7b3a",
+              "#a5a5a5",
+              "#febf29",
+              "#4673c2",
+              "#72ad4c"
+            ],
+            "showDataLabel": true,
+            "showLegend": false
+          }
+        }
+      ],
+      "categoryField": "tipo",
+      "operation": "sum",
+      "valueFields": [
+        "st_length(shape)"
+      ],
+      "sortOrder": {
+        "isLabelAxis": true,
+        "isAsc": true
+      }
+    },
+    {
+      "url": "https://localhost:6443/arcgis/rest/services/Proyecto/ServicioCableado/MapServer/4",
+      "filter": {
+        "logicalOperator": "AND",
+        "parts": [],
+        "displaySQL": "1=1",
+        "expr": "1=1"
+      },
+      "description": "",
+      "symbol": {
+        "color": [
+          155,
+          187,
+          89,
+          255
+        ],
+        "width": 2.25,
+        "type": "esriSLS",
+        "style": "esriSLSSolid"
+      },
+      "webMapLayerId": null,
+      "mode": "category",
+      "name": "Cableado por central",
+      "highLightColor": "#ff0000",
+      "types": [
+        {
+          "type": "column",
+          "display": {
+            "colors": [
+              "#9932cc"
+            ],
+            "showHorizontalAxis": false,
+            "showVerticalAxis": true,
+            "showLegend": false
+          }
+        }
+      ],
+      "categoryField": "cod_central",
+      "operation": "sum",
+      "valueFields": [
+        "st_length(shape)"
+      ],
+      "sortOrder": {
+        "isLabelAxis": true,
+        "isAsc": true
+      }
+    },
+    {
+      "url": "https://localhost:6443/arcgis/rest/services/Proyecto/Servicio_Clientes/MapServer/0",
+      "filter": {
+        "logicalOperator": "AND",
+        "parts": [],
+        "expr": "1=1",
+        "displaySQL": "1=1"
+      },
+      "description": "",
+      "symbol": {
+        "color": [
+          0,
+          0,
+          128,
+          128
+        ],
+        "size": 18,
+        "angle": 0,
+        "xoffset": 0,
+        "yoffset": 0,
+        "type": "esriSMS",
+        "style": "esriSMSCircle",
+        "outline": {
+          "color": [
+            0,
+            0,
+            128,
+            255
+          ],
+          "width": 0.75,
+          "type": "esriSLS",
+          "style": "esriSLSSolid"
+        }
+      },
+      "webMapLayerId": null,
+      "mode": "count",
+      "name": "Número de clientes según el municipio.",
+      "highLightColor": "#ff0000",
+      "types": [
+        {
+          "type": "line",
+          "display": {
+            "colors": [
+              "#5d9cd3",
+              "#eb7b3a",
+              "#a5a5a5",
+              "#febf29",
+              "#4673c2",
+              "#72ad4c"
+            ],
+            "showHorizontalAxis": true,
+            "showVerticalAxis": true,
+            "showLegend": false
+          }
+        }
+      ],
+      "categoryField": "user_poblacion",
+      "sortOrder": {
+        "isLabelAxis": true,
+        "isAsc": true
+      }
+    }
+  ]
+}

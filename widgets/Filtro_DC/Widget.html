@@ -1,0 +1,96 @@
+<div>
+
+
+    <h3>Seleccione la capa o capas que desea agregar:</h3>
+
+    <br>
+
+    <div id="capas" class="form-check form-switch">
+    <form>
+        <input type="checkbox" data-dojo-attach-point="Cableado" name="Cableado" value="Cableado" data-dojo-attach-event="onchange:añadir_cableado" class="form-check-input">
+        <label for="Cableado"> Red de cableado</label><br>
+        <input type="checkbox" data-dojo-attach-point="Clientes" name="Clientes" value="Clientes" data-dojo-attach-event="onchange:añadir_clientes" class="form-check-input">
+        <label for="Clientes"> Clientes</label><br>        
+        <input type="checkbox" data-dojo-attach-point="Centrales" name="Centrales" value="Centrales" data-dojo-attach-event="onchange:añadir_centrales" class="form-check-input">
+        <label for="Centrales"> Centrales</label><br><br>
+        
+    </form>
+    </div>
+
+
+
+    <h4><label class="etiqueta" for="consulta">Cableado:</label></h4>
+    <!-- PINTA EN EL MAPA LOS CABLES SEGÚN EL TIPO -->
+        <select name="consulta" data-dojo-attach-point="consultaSelect" class="form-select">
+          <option value="-1">Seleccione un tipo de cable</option>
+          <option value="0">Fibra</option>
+          <option value="1">Cobre</option>
+          <option value="2">HFC</option>
+          <option value="3">Coaxial</option>
+          <option value="4">Otros</option>
+        </select>
+    <br>
+    
+    <button data-dojo-attach-event="onclick:EjecutarConsulta" class="btn btn-outline-primary">Consultar municipios</button>
+
+    <h4><label for="municipios">Municipios:</label></h4>
+
+    <div id="municipios">        
+
+    <select name="municipios" data-dojo-attach-event="onchange:zoomMunicipios"data-dojo-attach-point="buscador_municipios" 
+    class="form-select"></select>
+
+    <div id="conductos">
+        <button id="conductos" data-dojo-attach-event="onclick:añadir_conductos" class="btn btn-outline-primary">Conductos</button>
+    </div>
+    
+
+    <br>
+    </div>
+    <br>
+
+    <button data-dojo-attach-event="onclick:EjecutarQuery" class="btn btn-outline-primary">Consultar cableado</button>
+        
+    
+    
+
+
+    <!-- /*<select name="municipiosSeleccionados" data-dojo-attach-point="municipiosSeleccionados" 
+    class="form-select"></select> -->
+
+
+    <br>
+    <hr>  
+
+
+    <button data-dojo-attach-event="onclick:restaurar" class="btn btn-outline-primary">Restaurar filtros</button>   
+    
+    <br>
+    <br> 
+
+    <!-- <button data-dojo-attach-event="onclick:EjecutarConsulta" class="btn btn-outline-success" id="boton1">Ejecutar</button> -->
+
+
+
+    <!-- <button data-dojo-attach-event="onclick:consultaMunis" class="btn btn-outline-dark" id="boton3">Obtener municipios</button> -->
+    <div id="lista_identificadoir_cableado">
+
+    <!-- <ul id="lista_municipios_con_cable"></ul> -->
+
+    <ul id="lista_cables_por_municipio_Fibra"><strong>Fibra</strong></ul>
+
+    <ul id="lista_cables_por_municipio_Cobre"><strong>Cobre</strong></ul>
+    <ul id="lista_cables_por_municipio_HFC"><strong>HFC</strong></ul>
+    <ul id="lista_cables_por_municipio_Coaxial"><strong>Coaxial</strong></ul>
+    <ul id="lista_cables_por_municipio_Otros"><strong>Otros</strong></ul>
+    </div>
+    
+
+
+
+
+
+    
+
+  
+</div>

@@ -1,0 +1,31 @@
+<div>
+
+  <div>
+    <p>El Widget Distribución de clientes renderiza los datos de puntos en una visualización rasterizada que enfatiza las áreas de mayor densidad, denominado mapa de calor.</p>
+    
+    
+    <h4><label class="etiqueta" for="Radius">Radio de desenfoque</label></h4>
+    <p>El radio, en píxeles, del círculo del círculo sobre el que se extiende la mayor parte del valor de cada punto.</p>
+    <select name="Radius" data-dojo-attach-point="radioSelect"  class="form-select">
+      <option value="-1">Seleccione un radio (px)</option>
+      <option value="10">10</option>
+      <option value="12">12</option>
+      <option value="15">15</option>
+      <option value="20">20</option>
+    </select>
+
+    <h4>Intensidad máxima del píxel:</h4>
+    <p> El valor de la intensidad del píxel al que se le asigna el color final en la rampa de color.</p>
+
+    <input type="number" data-dojo-attach-point="maxpx" class="form-control" max="50" min="0">
+
+    <h4>Intensidad mínima del píxel</h4>
+    <p>El valor de intensidad del píxel al que se le asigna el color inicial en la rampa de color.</p>
+    <input type="number" data-dojo-attach-point="minpx" class="form-control" max="30" min="0">
+
+  <div id="rampa_calor" data-dojo-attach-point="deslizador" data-dojo-attach-event="onhandlevaluechange:actualizar" ></div>   
+
+
+    <button data-dojo-attach-event="onclick:MapaCalor" class="btn btn-outline-primary" id="boton1">Ejecutar</button>
+  </div>
+</div>

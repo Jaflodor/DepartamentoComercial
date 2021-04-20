@@ -1,0 +1,29 @@
+.filtro-d-c h5 {
+  font-size: 1.2em;
+  margin-top: 0px;
+}
+.filtro-d-c h3, p {
+  margin-top: 0;
+}
+#municipios {
+
+  display: flex;
+
+}
+#conductos{
+
+  margin-left: 5px;
+}
+#capas{
+
+  font-size: 15px;
+}
+#lista_identificadoir_cableado{
+  display: flex;
+  flex-direction: row;
+}
+#lista_cables_por_municipio_Fibra{
+
+  padding-bottom: 15px;
+}
+

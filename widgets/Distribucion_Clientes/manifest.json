@@ -1,0 +1,24 @@
+{
+  "name": "Distribucion_Clientes",
+  "2D": true,
+  "3D": false,
+  "platform": "HTML",
+  "version": "0.0.1",
+  "wabVersion": "2.17",
+  "author": "Javier Flores",
+  "description": "Wisget que genera un mapa de calor en función de la concentración y distribución de los clientes.",
+  "copyright": "",
+  "license": "ISC",
+  "properties": {
+    "inPanel": true,
+    "hasLocale": false,
+    "hasStyle": true,
+    "hasConfig": false,
+    "hasUIFile": true,
+    "hasSettingPage": false,
+    "hasSettingUIFile": false,
+    "hasSettingLocale": false,
+    "hasSettingStyle": false,
+    "IsController": false
+  }
+}
