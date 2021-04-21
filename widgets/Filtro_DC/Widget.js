@@ -34,11 +34,11 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', "esri/layers/FeatureLayer", "do
 
             onOpen: function onOpen() {
 
-                  console.log(this.map.extent);
+                  
 
                   var consultaMunicipios = new QueryTask("https://localhost:6443/arcgis/rest/services/Proyecto/Servicio_Densidad_Renta_Com_Madrid/FeatureServer/0");
 
-                  console.log("Estoy en la linea 56");
+                  
 
                   var queryMunicipios = new query();
                   queryMunicipios.returnGeometry = true;
@@ -46,11 +46,11 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', "esri/layers/FeatureLayer", "do
                   queryMunicipios.orderByFields = ["municpio_1"];
                   queryMunicipios.where = "1=1";
 
-                  console.log("Estoy en la linea 64", queryMunicipios);
+                  
 
                   consultaMunicipios.execute(queryMunicipios, lang.hitch(this, function (evt) {
 
-                        console.log("Estoy en la linea 68", evt);
+                        
 
                         var opciones = document.createElement("option");
                         opciones.value = -1;
@@ -81,7 +81,7 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', "esri/layers/FeatureLayer", "do
 
                   consultaZoomMunicipio.execute(queryZoomMunicipio, lang.hitch(this, function (evt) {
 
-                        console.log("evt", evt);
+                        
 
                         if (evt.features.length > 0) {
 
@@ -89,9 +89,9 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', "esri/layers/FeatureLayer", "do
                               this.map.graphics.clear();
                               this.map.graphics.add(new graphic(geometria, new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID, new SimpleLineSymbol(SimpleLineSymbol.STYLE_LONGDASH, new Color([234, 152, 223]), 2), new Color([235, 141, 106, 0.25]))));
 
-                              /*this.map.setExtent(geometria.getExtent(), true)*/
+                              
 
-                              console.log("La geometria es", geometria);
+                              
                         }
                   }));
             },
@@ -103,11 +103,11 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', "esri/layers/FeatureLayer", "do
 
                   this.map.addLayer(capa_conductos);
 
-                  console.log("Mapita:", this.map);
+                  
             },
             añadir_clientes: function aAdir_clientes() {
 
-                  console.log("estado: " + this.Clientes.ckecked);
+                  
 
                   if (this.Clientes.checked == true) {
 
@@ -146,70 +146,8 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', "esri/layers/FeatureLayer", "do
                         var extensionCab = new Extent(-560683.0447687416, 4812156.523682616, -345742.1212309296, 5014256.026468524, new SpatialReference({ wkid: 102100 }));
                   }
 
-                  /*PRUEBA DE CÁLCULO DE ESTADÍSTICAS PARA OBTENER EL SUMATORIO DE SHAPELENGH. NO HA SALIDO BIEN*/
-
-                  /*var estadisticas_cableado = new FeatureLayerStatistics({layer: capa_cableado})
-                    var estadisticas_cableado_parametros = {field: "tipo_de_instalacion"}
-                    console.log("Campos:", estadisticas_cableado_parametros)
-                    estadisticas_cableado.getUniqueValues(estadisticas_cableado_parametros).then(function(resultados){
-                      console.log("Suma todo el cableado:", resultados.uniqueValueInfos)
-                  })*/
-
-                  /*REALIZAMOS UNA QUERY DE LA GEOMETRIA DE LOS CABLES Y DE LOS MUNICIPIOS PARA SACAR UN LISTA DE AQUELLOS QUE NO TIENE CABLE*/
-            },
-
-
-            /*consultaMunis(){
-            
-                     /*CONSULTA AL SERVICIO DE MUNICIPIOS PARA OBTENER SUS GEOMETRIAS*/
-            /*NO ES NECESARIO HACERLO*/
-
-            /*var queryMunicipiosCableado = new QueryTask("https://localhost:6443/arcgis/rest/services/Proyecto/Servicio_Densidad_Renta_Com_Madrid/FeatureServer/0")
-              var consultaMunicipios_intersect = new query();
-              consultaMunicipios_intersect.returnGeometry=true;
-            consultaMunicipios_intersect.outFields=["*"];
-            consultaMunicipios_intersect.where = "1=1";
-              queryMunicipiosCableado.execute(consultaMunicipios_intersect, lang.hitch(this, function(results){
-                if(results.features.length > 0){
-                  geometria_municipios = results.features[0].geometry
-                  console.log("Geometria Municipios", geometria_municipios)
-              }
-                  }))*/
-
-            /*var queryCableadoMunicipios = new QueryTask("https://localhost:6443/arcgis/rest/services/Proyecto/ServicioCableado/FeatureServer/4")
-              var consultaCableado_intersect = new query();
-              consultaCableado_intersect.returnGeometry=true;
-            consultaCableado_intersect.outFields=["*"];
-            consultaCableado_intersect.where = "1=1";
-                queryCableadoMunicipios.execute(consultaCableado_intersect, lang.hitch(this, function(results){
-                if(results.features.length > 0){
-                  for(i=0; i<results.features.length; i++){
-                    geometria_cableado = results.features[i].geometry
-                   console.log("Geometria Cableado", geometria_cableado)
-                 console.log("Nombre del cable", results.features[i].attributes.identificador)
-                 console.log("Tipo de cable", results.features[i].attributes.tipo)
-                     var queryCables = new query();
-                 queryCables.returnGeometry = true;
-                 queryCables.geometry = geometria_cableado;
-                 queryCables.outFields = ["*"];
-                 queryCables.orderByFields = ["municpio_1"]
-                 queryCables.spatialRelationship = query.SPATIAL_REL_INTERSECTS
-                   var munis = new FeatureLayer("https://localhost:6443/arcgis/rest/services/Proyecto/Servicio_Densidad_Renta_Com_Madrid/FeatureServer/0")
-                   munis.queryFeatures(queryCables, lang.hitch(this, function (FeatureSet){
-                    for(i=0; i<FeatureSet.features.length; i++){
-                      console.log("FeatureSet", FeatureSet)
-                    console.log("Municipio:", FeatureSet.features[i].attributes.municpio_1)
-                      }
                   
-                  
-                     }))
-                    }
-                  
-                  }
-                  })
-              
-                  
-              }*/
+            },            
 
             añadir_centrales: function aAdir_centrales() {
 
@@ -241,8 +179,7 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', "esri/layers/FeatureLayer", "do
                   consultaCableado_intersect.outFields = ["*"];
                   consultaCableado_intersect.where = "tipo = " + this.consultaSelect.value;
                   consultaCableado_intersect.outSpatialReference = new SpatialReference(102100);
-
-                  console.log(consultaCableado_intersect.where);
+                  
 
                   queryCableadoMunicipios.execute(consultaCableado_intersect, lang.hitch(this, function (results) {
 
@@ -259,78 +196,56 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', "esri/layers/FeatureLayer", "do
 
                               for (i = 0; i < results.features.length; i++) {
 
-                                    var geometria_cableado = results.features[i].geometry;
-                                    console.log("Geometria Cableado", geometria_cableado);
-                                    console.log("Nombre del cable", results.features[i].attributes.identificador);
-                                    console.log("Tipo de cable", results.features[i].attributes.tipo);
+                                    var geometria_cableado = results.features[i].geometry;                                
 
-                                    // this.map.graphics.clear();
-
+                                    
                                     this.map.graphics.add(new graphic(geometria_cableado, new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color([101, 133, 233]), 2), new Color([101, 226, 223])));
                                     this.map.setExtent(extensionCab);
 
-                                    console.log(results);
-
+                                    
                                     var queryCables = new query();
 
                                     queryCables.returnGeometry = true;
                                     queryCables.geometry = geometria_cableado;
                                     queryCables.outFields = ["*"];
-                                    queryCables.orderByFields = ["municpio_1"];
+                                    queryCables.orderByFields = ["municpio_1"];                                 
 
-                                    /*-----AQUÍ HE AÑADIDO LA CLAUSURA WHERE----*/
-
-                                    /*queryCables.where = "objectid = " + this.buscador_municipios.value;*/
-
-                                    /*------------------------------------------------*/
+                                    
 
                                     queryCables.spatialRelationship = query.SPATIAL_REL_INTERSECTS;
 
                                     var munis = new FeatureLayer("https://localhost:6443/arcgis/rest/services/Proyecto/Servicio_Densidad_Renta_Com_Madrid/MapServer/0");
 
-                                    /*ESTABLEZCO UNA EXPRESION DE DEFINICIÓN PARA CARGAR LA CAPA SOLO CON LA GEOMETRÍA DEL MUNICIPIO SELECCIONADO EN LA LISTA DE MUNICIPIOS*/
-
-                                    /*munis.setDefinitionExpression("objectid =' " + this.buscador_municipios.value + "'")*/
-
-                                    /*----------------------------------------------------*/
+                                    
                                     var listavaciamunicipios = [];
 
                                     munis.queryFeatures(queryCables, lang.hitch(this, function (FeatureSet) {
 
                                           for (i = 0; i < FeatureSet.features.length; i++) {
 
-                                                console.log("FeatureSet", FeatureSet);
-                                                console.log("Municipio:", FeatureSet.features[i].attributes.municpio_1);
+                                                
 
                                                 municipio_individual = FeatureSet.features[i].attributes.municpio_1;
 
                                                 listavaciamunicipios.push(municipio_individual);
                                           }
 
-                                          console.log("Lista:", listavaciamunicipios);
+                                         
 
                                           municipiosFiltrados = listavaciamunicipios.filter(function (item, pos) {
 
                                                 return listavaciamunicipios.indexOf(item) === pos;
                                           });
 
-                                          console.log(municipiosFiltrados);
+                                          
 
                                           municipiosOrdenAlfabetico = municipiosFiltrados.sort();
 
-                                          console.log("Municipios Ordenados:", municipiosOrdenAlfabetico);
+                                          
                                     }));
                               };
 
-                              /*for (i = 0; i < municipiosOrdenAlfabetico.length; i++) {            
                               
-                                var contenido;
-                                 var li = document.createElement("li");
-                               var p = document.createElement("p");
-                               contenido = municipiosOrdenAlfabetico[i];
-                               p.appendChild(document.createTextNode(contenido));
-                               document.getElementById("lista_municipios_con_cable").appendChild(li).appendChild(p);
-                                }*/
                         } else if (results.features.length > 0 & this.consultaSelect.value == 1) {
 
                               this.map.graphics.clear();
@@ -338,16 +253,12 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', "esri/layers/FeatureLayer", "do
                               for (i = 0; i < results.features.length; i++) {
 
                                     var geometria_cableado = results.features[i].geometry;
-                                    console.log("Geometria Cableado", geometria_cableado);
-                                    console.log("Nombre del cable", results.features[i].attributes.identificador);
-                                    console.log("Tipo de cable", results.features[i].attributes.tipo);
-
-                                    // this.map.graphics.clear();
+                                    
 
                                     this.map.graphics.add(new graphic(geometria_cableado, new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color([51, 225, 51]), 2), new Color([101, 226, 223])));
                                     this.map.setExtent(extensionCab);
 
-                                    console.log(results);
+                                  
 
                                     var queryCables = new query();
                                     queryCables.returnGeometry = true;
@@ -364,26 +275,25 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', "esri/layers/FeatureLayer", "do
 
                                           for (i = 0; i < FeatureSet.features.length; i++) {
 
-                                                console.log("FeatureSet", FeatureSet);
-                                                console.log("Municipio:", FeatureSet.features[i].attributes.municpio_1);
+                                                
 
                                                 municipio_individual = FeatureSet.features[i].attributes.municpio_1;
 
                                                 listavaciamunicipios.push(municipio_individual);
                                           }
 
-                                          console.log("Lista:", listavaciamunicipios);
+                                          
 
                                           municipiosFiltrados = listavaciamunicipios.filter(function (item, pos) {
 
                                                 return listavaciamunicipios.indexOf(item) === pos;
                                           });
 
-                                          console.log(municipiosFiltrados);
+                                         
 
                                           municipiosOrdenAlfabetico = municipiosFiltrados.sort();
 
-                                          console.log("Municipios Ordenados:", municipiosOrdenAlfabetico);
+                                          
                                     }));
                               }
                         } else if (results.features.length > 0 & this.consultaSelect.value == 2) {
@@ -392,16 +302,12 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', "esri/layers/FeatureLayer", "do
                               for (i = 0; i < results.features.length; i++) {
 
                                     var geometria_cableado = results.features[i].geometry;
-                                    console.log("Geometria Cableado", geometria_cableado);
-                                    console.log("Nombre del cable", results.features[i].attributes.identificador);
-                                    console.log("Tipo de cable", results.features[i].attributes.tipo);
-
-                                    // this.map.graphics.clear();
+                                    
 
                                     this.map.graphics.add(new graphic(geometria_cableado, new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color([255, 0, 0]), 2), new Color([101, 226, 223])));
                                     this.map.setExtent(extensionCab);
 
-                                    console.log(results);
+                                   
 
                                     var queryCables = new query();
                                     queryCables.returnGeometry = true;
@@ -418,26 +324,25 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', "esri/layers/FeatureLayer", "do
 
                                           for (i = 0; i < FeatureSet.features.length; i++) {
 
-                                                console.log("FeatureSet", FeatureSet);
-                                                console.log("Municipio:", FeatureSet.features[i].attributes.municpio_1);
+                                                
 
                                                 municipio_individual = FeatureSet.features[i].attributes.municpio_1;
 
                                                 listavaciamunicipios.push(municipio_individual);
                                           }
 
-                                          console.log("Lista:", listavaciamunicipios);
+                                         
 
                                           municipiosFiltrados = listavaciamunicipios.filter(function (item, pos) {
 
                                                 return listavaciamunicipios.indexOf(item) === pos;
                                           });
 
-                                          console.log(municipiosFiltrados);
+                                          
 
                                           municipiosOrdenAlfabetico = municipiosFiltrados.sort();
 
-                                          console.log("Municipios Ordenados:", municipiosOrdenAlfabetico);
+                                          
                                     }));
                               }
                         } else if (results.features.length > 0 & this.consultaSelect.value == 3) {
@@ -447,17 +352,12 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', "esri/layers/FeatureLayer", "do
                               for (i = 0; i < results.features.length; i++) {
 
                                     var geometria_cableado = results.features[i].geometry;
-                                    console.log("Geometria Cableado", geometria_cableado);
-                                    console.log("Nombre del cable", results.features[i].attributes.identificador);
-                                    console.log("Tipo de cable", results.features[i].attributes.tipo);
-
-                                    // this.map.graphics.clear();
+                                    
 
                                     this.map.graphics.add(new graphic(geometria_cableado, new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color([255, 0, 255]), 2), new Color([101, 226, 223])));
                                     this.map.setExtent(extensionCab);
 
-                                    console.log(results);
-
+                                    
                                     var queryCables = new query();
                                     queryCables.returnGeometry = true;
                                     queryCables.geometry = geometria_cableado;
@@ -473,26 +373,25 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', "esri/layers/FeatureLayer", "do
 
                                           for (i = 0; i < FeatureSet.features.length; i++) {
 
-                                                console.log("FeatureSet", FeatureSet);
-                                                console.log("Municipio:", FeatureSet.features[i].attributes.municpio_1);
+                                               
 
                                                 municipio_individual = FeatureSet.features[i].attributes.municpio_1;
 
                                                 listavaciamunicipios.push(municipio_individual);
                                           }
 
-                                          console.log("Lista:", listavaciamunicipios);
+                                          
 
                                           municipiosFiltrados = listavaciamunicipios.filter(function (item, pos) {
 
                                                 return listavaciamunicipios.indexOf(item) === pos;
                                           });
 
-                                          console.log(municipiosFiltrados);
+                                          
 
                                           municipiosOrdenAlfabetico = municipiosFiltrados.sort();
 
-                                          console.log("Municipios Ordenados:", municipiosOrdenAlfabetico);
+                                          
                                     }));
                               }
                         } else if (results.features.length > 0 & this.consultaSelect.value == 4) {
@@ -502,16 +401,12 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', "esri/layers/FeatureLayer", "do
                               for (i = 0; i < results.features.length; i++) {
 
                                     var geometria_cableado = results.features[i].geometry;
-                                    console.log("Geometria Cableado", geometria_cableado);
-                                    console.log("Nombre del cable", results.features[i].attributes.identificador);
-                                    console.log("Tipo de cable", results.features[i].attributes.tipo);
-
-                                    // this.map.graphics.clear();
+                                    
 
                                     this.map.graphics.add(new graphic(geometria_cableado, new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID, new Color([128, 128, 128]), 2), new Color([101, 226, 223])));
                                     this.map.setExtent(extensionCab);
 
-                                    console.log(results);
+                                 
 
                                     var queryCables = new query();
                                     queryCables.returnGeometry = true;
@@ -528,26 +423,25 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', "esri/layers/FeatureLayer", "do
 
                                           for (i = 0; i < FeatureSet.features.length; i++) {
 
-                                                console.log("FeatureSet", FeatureSet);
-                                                console.log("Municipio:", FeatureSet.features[i].attributes.municpio_1);
+                                               
 
                                                 municipio_individual = FeatureSet.features[i].attributes.municpio_1;
 
                                                 listavaciamunicipios.push(municipio_individual);
                                           }
 
-                                          console.log("Lista:", listavaciamunicipios);
+                                         
 
                                           municipiosFiltrados = listavaciamunicipios.filter(function (item, pos) {
 
                                                 return listavaciamunicipios.indexOf(item) === pos;
                                           });
 
-                                          console.log(municipiosFiltrados);
+                                          
 
                                           municipiosOrdenAlfabetico = municipiosFiltrados.sort();
 
-                                          console.log("Municipios Ordenados:", municipiosOrdenAlfabetico);
+                                         
                                     }));
                               };
                         };
@@ -555,7 +449,7 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', "esri/layers/FeatureLayer", "do
             },
 
 
-            /*------------PRUEBA PARA EJECUTAR QUERY CON EL MUNICIPIO Y EL CABLEADO COMO PARAMETROS DE ENTRADA--------------*/
+            /*------------EJECUTAR QUERY CON EL MUNICIPIO Y EL CABLEADO COMO PARAMETROS DE ENTRADA--------------*/
 
             EjecutarQuery: function EjecutarQuery() {
 
@@ -589,9 +483,7 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', "esri/layers/FeatureLayer", "do
                                     this.map.graphics.add(new graphic(geometria_municipio_seleccionado, new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID, new SimpleLineSymbol(SimpleLineSymbol.STYLE_LONGDASH, new Color([234, 152, 223]), 2), new Color([235, 141, 106, 0.25]))));
                               }
 
-                              console.log("Geoemtria Municipio seleccionado:", geometria_municipio_seleccionado);
-
-                              console.log("Municipio seleccionado;", nombreMunicipio_seleccionado);
+                              
 
                               /*DEFINIMOS UNA NUEVA QUERY PARA EL SERVICIO DE CABLEADO PASANDOLE COMO GEOMETRIA DE ENTRADA LA DEL MUNICIPIO SELECCIONADO EN LA LISTA DE MUNICIPIOS: geometria_municipio_seleccionado*/
 
@@ -620,11 +512,11 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', "esri/layers/FeatureLayer", "do
 
                                     if (EVT.features.length > 0 & this.consultaSelect.value == 0) {
 
-                                          // this.map.graphics.clear();
+                                          
 
                                           for (i = 0; i < EVT.features.length; i++) {
 
-                                                console.log("EVT:", EVT);
+                                                
 
                                                 var geometria_cableado_seleccionado = EVT.features[i].geometry;
                                                 var identificador = EVT.features[i].attributes.identificador;
@@ -645,7 +537,7 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', "esri/layers/FeatureLayer", "do
 
                                           this.map.setExtent(geometria_municipio_seleccionado.getExtent(), true);
 
-                                          console.log("Identificadores de fibra;", identificadorFibra);
+                                          
                                     } else if (EVT.features.length == 0 & this.consultaSelect.value == 0) {
 
                                           alert("En " + nombreMunicipio_seleccionado + " no existe instalación de Fibra ");
@@ -657,7 +549,7 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', "esri/layers/FeatureLayer", "do
 
                                           for (i = 0; i < EVT.features.length; i++) {
 
-                                                console.log("EVT:", EVT);
+                                                
 
                                                 var geometria_cableado_seleccionado = EVT.features[i].geometry;
                                                 var identificador = EVT.features[i].attributes.identificador;
@@ -678,7 +570,7 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', "esri/layers/FeatureLayer", "do
 
                                           this.map.setExtent(geometria_municipio_seleccionado.getExtent(), true);
 
-                                          console.log("Identificadores de Cobre;", identificadorCobre);
+                                          
                                     } else if (EVT.features.length == 0 & this.consultaSelect.value == 1) {
 
                                           alert("En " + nombreMunicipio_seleccionado + " no existe instalación de Cobre ");
@@ -686,11 +578,11 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', "esri/layers/FeatureLayer", "do
 
                                     if (EVT.features.length > 0 & this.consultaSelect.value == 2) {
 
-                                          // this.map.graphics.clear();
+                                          
 
                                           for (i = 0; i < EVT.features.length; i++) {
 
-                                                console.log("EVT:", EVT);
+                                                
 
                                                 var geometria_cableado_seleccionado = EVT.features[i].geometry;
                                                 var identificador = EVT.features[i].attributes.identificador;
@@ -709,7 +601,7 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', "esri/layers/FeatureLayer", "do
                                                 document.getElementById("lista_cables_por_municipio_HFC").appendChild(li).appendChild(p);
                                           }
 
-                                          console.log("Identificadores de HFC;", identificadorHFC);
+                                          
 
                                           this.map.setExtent(geometria_municipio_seleccionado.getExtent(), true);
                                     } else if (EVT.features.length == 0 & this.consultaSelect.value == 2) {
@@ -719,11 +611,11 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', "esri/layers/FeatureLayer", "do
 
                                     if (EVT.features.length > 0 & this.consultaSelect.value == 3) {
 
-                                          // this.map.graphics.clear();
+                                          
 
                                           for (i = 0; i < EVT.features.length; i++) {
 
-                                                console.log("EVT:", EVT);
+                                               
 
                                                 var geometria_cableado_seleccionado = EVT.features[i].geometry;
                                                 var identificador = EVT.features[i].attributes.identificador;
@@ -742,7 +634,7 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', "esri/layers/FeatureLayer", "do
                                                 document.getElementById("lista_cables_por_municipio_Coaxial").appendChild(li).appendChild(p);
                                           }
 
-                                          console.log("Identificadores de Coaxial;", identificadorCoaxial);
+                  
 
                                           this.map.setExtent(geometria_municipio_seleccionado.getExtent(), true);
                                     } else if (EVT.features.length == 0 & this.consultaSelect.value == 3) {
@@ -752,11 +644,11 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', "esri/layers/FeatureLayer", "do
 
                                     if (EVT.features.length > 0 & this.consultaSelect.value == 4) {
 
-                                          // this.map.graphics.clear();
+                                          
 
                                           for (i = 0; i < EVT.features.length; i++) {
 
-                                                console.log("EVT:", EVT);
+                                                
 
                                                 var geometria_cableado_seleccionado = EVT.features[i].geometry;
                                                 var identificador = EVT.features[i].attributes.identificador;
@@ -774,8 +666,7 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', "esri/layers/FeatureLayer", "do
                                                 p.appendChild(document.createTextNode(contenido));
                                                 document.getElementById("lista_cables_por_municipio_Otros").appendChild(li).appendChild(p);
                                           }
-
-                                          console.log("Identificadores de Otros;", identificadorOtros);
+                                          
 
                                           this.map.setExtent(geometria_municipio_seleccionado.getExtent(), true);
                                     }
