@@ -29,15 +29,14 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', "esri/renderers/HeatmapRenderer
                   this.inherited(arguments);
                   console.log('Distribucion_Clientes::startup');
                   mimapa = this.map;
-                  console.log(mimapa);
-                  console.log(this.map.graphicsLayerIds);
+                  
             },
 
             onOpen: function onOpen() {
 
                   console.log('Distribucion_Clientes::onOpen');
 
-                  /*if(this.map.graphicsLayerIds.length < 4){}*/
+                  
 
                   capa_clientes_options = {
                         mode: FeatureLayer.MODE_SNAPSHOT
@@ -99,10 +98,9 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', "esri/renderers/HeatmapRenderer
 
             MapaCalor: function MapaCalor() {
 
-                  /*capa_clientes_calor = new FeatureLayer ("https://localhost:6443/arcgis/rest/services/Proyecto/Servicio_Clientes/FeatureServer/0")*/
+                  
 
-                  var calorRender = new HeatmapRenderer({
-                        // colors: ["rgba(0, 0, 255, 0)","rgb(0, 0, 255)","rgb(255, 0, 255)", "rgb(255, 0, 0)"],
+                  var calorRender = new HeatmapRenderer({                        
                         blurRadius: this.radioSelect.value,
                         maxPixelIntensity: this.maxpx.value,
                         minPixelIntensity: this.minpx.value,
@@ -114,44 +112,17 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', "esri/renderers/HeatmapRenderer
 
                         capa_clientes_calor = capa_clientes.setRenderer(calorRender);
 
-                        /*capa_clientes.setRenderer(calorRender);*/
+                        
 
                         this.map.addLayer(capa_clientes_calor);
                   } else {
 
                         alert("Introduce el radio del círculo, los valores máximos y mínimos de los píxeles");
                   };
+                  
+                  
 
-                  console.log("MImAPA:", mimapa);
-                  console.log(this.map.graphicsLayerIds);
-
-                  // var id = this.map.graphicsLayerIds
-
-                  // console.log("Lista capas:" + id)
-
-                  // for(i = 0; i > 2; i++){
-
-                  //   var layer = this.map.graphicsLayerIds([i])       
-
-
-                  // }
-
-                  // deslizadorColor.on(["thumb-change", "thumb-drag"], function() {
-                  //   const renderer = capa_clientes_calor.renderer.clone();
-                  //   renderer.myStops = deslizadorColor.stops;
-                  //   capa_clientes_calor.renderer = renderer;
-                  // })
-
-
-                  // var renderizador = this.deslizador
-
-                  // renderizador.addEventListener("handle-value-change", function (evt){
-                  //   var c = +evt.target.value;
-                  //   if (c !== calorRender.colorStops) {
-                  //     calorRender.colorStops = c;
-                  //     capa_clientes_calor.redraw();
-                  //   }
-                  // });
+                  
 
             },
             actualizar: function actualizar() {
@@ -166,15 +137,11 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', "esri/renderers/HeatmapRenderer
 
             onClose: function onClose() {
 
-                  console.log("Mi mapa cerrado:", mimapa);
+                  
 
                   this.map.removeLayer(capa_clientes);
 
-                  /*var intro = document.getElementById("Introduccion")
-                  var info = document.getElementById("Informacion")*/
-
-                  /*intro.remove()
-                  info.remove()*/
+                  
             }
 
             // onMinimize: function(){
