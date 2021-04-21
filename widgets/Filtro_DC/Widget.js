@@ -206,7 +206,7 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', "esri/layers/FeatureLayer", "do
                     }
                   
                   }
-                  }))
+                  })
               
                   
               }*/
