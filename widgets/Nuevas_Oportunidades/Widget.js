@@ -35,7 +35,7 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', "dojo/_base/lang", "esri/tasks/
             Rentaquery.outFields = ["*"];
             Rentaquery.where = "sum_renta_ >" + this.RentaMin.value + " AND " + " sum_renta_ < " + this.RentaMax.value;
 
-            console.log("Query renta:", Rentaquery);
+            
 
             var ArrayRenta = [];
 
@@ -43,23 +43,23 @@ define(['dojo/_base/declare', 'jimu/BaseWidget', "dojo/_base/lang", "esri/tasks/
 
                 if (evt.features.length > 0) {
 
-                    console.log(evt);
+                    
 
                     for (i = 0; i < evt.features.length; i++) {
 
                         var geometriamunis = evt.features[i].geometry;
                         this.map.graphics.add(new graphic(geometriamunis, new SimpleFillSymbol(SimpleFillSymbol.STYLE_SOLID, new SimpleLineSymbol(SimpleLineSymbol.STYLE_SHORTDASHDOTDOT, new Color([0, 0, 255]), 2), new Color([235, 141, 106, 0.25]))));
 
-                        console.log(evt.features[i].attributes.municpio_1);
+                        
 
                         var Municipos_Query = evt.features[i].attributes.municpio_1;
 
                         ArrayRenta.push(Municipos_Query);
 
-                        console.log("geometria:", geometriamunis);
+                        
                     }
 
-                    console.log(ArrayRenta);
+                    
                 }
             }));
         },
